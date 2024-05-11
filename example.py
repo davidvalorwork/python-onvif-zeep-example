@@ -14,7 +14,7 @@ device = ONVIFCamera(
     "8080",
     "admin",
     "password",
-    "/usr/local/lib/python3.11/site-packages/wsdl",
+    "/app/python-onvif-zeep/wsdl",
     # transport=Transport(timeout=self.timeout),
 )
 
