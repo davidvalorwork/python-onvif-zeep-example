@@ -1,21 +1,26 @@
 from onvif import ONVIFCamera
 
-def init_onvif():
-    # Crear un objeto cliente ONVIF
-    device = ONVIFCamera(
-        "192.168.1.145",
-        "80",
-        "admin",
-        "67457172aA@@",
+class init_onvif:
+    def __init__(self, ip, port, usuario, contrasena):
+      print("Iniciando onvif")
+      self.device = ONVIFCamera(
+        ip,
+        port,
+        usuario,
+        contrasena,
         ".\python-onvif-zeep\wsdl",
         # transport=Transport(timeout=self.timeout),
-    )
+      )
+      self.service = self.device.create_ptz_service()
+      print("Conectado a la camara")
 
-    service = device.create_ptz_service()
-    absolute_move_request = service.create_type("AbsoluteMove")
-    pose_dict = {"PanTilt": {"x": 0.0, "y": 0.0}, "Zoom": {"x": 0.0}}
-    absolute_move_request.Position = pose_dict
-    absolute_move_request.Position["PanTilt"]["x"] = 0
-    absolute_move_request.Position["PanTilt"]["y"] = 0
-    absolute_move_request.Position["Zoom"]["x"] = 0
-    device.AbsoluteMove(absolute_move_request)
+    def move(self,x, y):
+        print("Moviendo", x, y)
+        absolute_move_request = self.service.create_type("AbsoluteMove")
+        pose_dict = {"PanTilt": {"x": x, "y": y}, "Zoom": {"x": 0.0}}
+        absolute_move_request.Position = pose_dict
+        absolute_move_request.Position["PanTilt"]["x"] = x
+        absolute_move_request.Position["PanTilt"]["y"] = y
+        absolute_move_request.Position["Zoom"]["x"] = 0
+        self.device.AbsoluteMove(absolute_move_request)
+        print("Movido a", x, y)
