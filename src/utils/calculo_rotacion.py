@@ -1,78 +1,60 @@
 import math
+from geopy.distance import geodesic
 
-"""
-Calcula el ángulo de rotación horizontal entre dos coordenadas GPS.
+def calcular_angulo_rotacion(origen, referencia, emergencia):
 
-Args:
-  lat_origen: Latitud del punto de origen (en grados).
-  lon_origen: Longitud del punto de origen (en grados).
-  lat_1: Latitud de la primera coordenada (en grados).
-  lon_1: Longitud de la primera coordenada (en grados).
-  lat_2: Latitud de la segunda coordenada (en grados).
-  lon_2: Longitud de la segunda coordenada (en grados).
-  orientacion_camara: Orientación de la cámara (en grados).
+  # Formula de Haversine
+  haversine_cateto_origen_referencia = geodesic(origen, referencia).meters
+  print("haversine_cateto_origen_referencia:",haversine_cateto_origen_referencia)
+  a = haversine_cateto_origen_referencia
 
-Returns:
-  Angulo de rotación horizontal (en grados).
-"""
-def calcular_angulo_rotacion(lat_origen, lon_origen, lat_1, lon_1, lat_2, lon_2):
-  # Convertir coordenadas a radianes
-  lat_origen_rad = lat_origen * math.pi / 180
-  lon_origen_rad = lon_origen * math.pi / 180
-  lat_1_rad = lat_1 * math.pi / 180
-  lon_1_rad = lon_1 * math.pi / 180
-  lat_2_rad = lat_2 * math.pi / 180
-  lon_2_rad = lon_2 * math.pi / 180
+  haversine_cateto_origen_emergencia = geodesic(origen, emergencia).meters
+  print("haversine_cateto_origen_emergencia3:",haversine_cateto_origen_emergencia)
+  b = haversine_cateto_origen_emergencia
 
-  # Calcular diferencias de longitud y latitud
-  delta_lon = lon_2_rad - lon_1_rad
-  delta_lat = lat_2_rad - lat_1_rad
+  haversine_cateto_referencia_emergencia = geodesic(referencia, emergencia).meters
+  print("haversine_cateto_referencia_emergencia2:",haversine_cateto_referencia_emergencia)
+  c = haversine_cateto_referencia_emergencia
 
-  # Convertir diferencias a distancias en metros
-  a = 6371000 * math.cos(lat_1_rad)
-  b = 6371000
+  # angulo_rotacion_rad = math.atan2(delta_lon, delta_lat)
+  teorema_del_coseno = ((a * a) + (b * b) - (c*c))/(2 * a * b)
+  teorema_del_coseno = math.acos(teorema_del_coseno)
+  print("TEOREMA COSENO", teorema_del_coseno)
 
-  distancia_x = delta_lon * a
-  distancia_y = delta_lat * b
+  lat_org_1 = origen[0] - referencia[0]
+  lon_org_1 = origen[1] - referencia[1]
 
-  # Calcular el ángulo de rotación (en radianes)
-  angulo_rotacion_rad = math.atan2(distancia_y, distancia_x)
+  lat_org_2 = origen[0] - emergencia[0]
+  lon_org_2 = origen[1] - emergencia[1]
+  
+  producto_cruz= (lat_org_1 * lon_org_2) - (lon_org_1 * lat_org_2)
+  print("SI POSITIVO HORARIO SI NEGATIVO ANTIHORARIO",producto_cruz)
 
-  # Convertir el ángulo a grados y ajustar la orientación
-  angulo_rotacion_grados = angulo_rotacion_rad * 180 / math.pi
+  # Convertir el ángulo a grados
+  angulo_rotacion_grados_teorema_coseno = (teorema_del_coseno * 180) / math.pi
 
-  # Calcular la orientación de la cámara (hacia la primera coordenada)
-  orientacion_camara = math.atan2(lon_1_rad - lon_origen_rad, lat_1_rad - lat_origen_rad) * 180 / math.pi
-
-  # Ajustar el rango del ángulo
-  print(orientacion_camara)
-  print(angulo_rotacion_grados)
-  angulo_rotacion_ajustado = angulo_rotacion_grados - orientacion_camara
-  if angulo_rotacion_ajustado < 0:
-    angulo_rotacion_ajustado += 360
-  elif angulo_rotacion_ajustado > 360:
-    angulo_rotacion_ajustado -= 360
-
-  return angulo_rotacion_ajustado
+  print("angulo_rotacion_grados_teorema_coseno:",angulo_rotacion_grados_teorema_coseno)
+  return angulo_rotacion_grados_teorema_coseno
 
 
 
 
 if __name__ == '__main__':
   # Ejemplo de uso
-  lat_origen = 10.365080019445864  # Latitud del punto de origen
-  lon_origen = -66.97754352980363  # Longitud del punto de origen
-  lat_1 = 10.364582423561325  # Latitud de la primera coordenada
-  lon_1 = -66.9775971650061  # Longitud de la primera coordenada
-  lat_2 = 10.364741602457904  # Latitud de la segunda coordenada
-  lon_2 =  -66.97789948094221  # Longitud de la segunda coordenada
-  lat_derecha_3 = 10.365002407377682 
-  lon_derecha_3 = -66.97747825401783
-  lat_atras_4 = 10.365233330828088
-  lon_atras_4 = -66.97767609475204
+  origen = (10.365072129702737, -66.9775462486802)
+  referencia = (10.364764751417162, -66.97756636524517)
+  bocono = (10.36500155145449, -66.97778161250672)
+  meta = (10.365006828332977, -66.97706278051929)
+  berta = (10.365654678419954, -66.97793301987491)
+  simoncito = (10.366454368101305, -66.97769878433466)
+  pao = (10.366164343123057, -66.97679802169682)
   coordenada_pan_1 = 0.565
 
-  angulo_rotacion = calcular_angulo_rotacion(lat_origen, lon_origen, lat_1, lon_1, lat_2, lon_2)
+  # angulo_rotacion = calcular_angulo_rotacion(origen, referencia, bocono)
+  # angulo_rotacion = calcular_angulo_rotacion(origen, referencia, meta)
+  # angulo_rotacion = calcular_angulo_rotacion(origen, referencia, simoncito)
+  angulo_rotacion = calcular_angulo_rotacion(origen, referencia, berta)
+  # angulo_rotacion = calcular_angulo_rotacion(origen, referencia, pao)
 
   print("Angulo de rotación horizontal en sentido antihorario:", angulo_rotacion)
 
