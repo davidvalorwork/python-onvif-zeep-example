@@ -33,14 +33,16 @@ def calcular_angulo_rotacion(origen, referencia, emergencia, coordenada_pan_refe
   # Convertir el ángulo a grados
   angulo_rotacion_grados_teorema_coseno = (teorema_del_coseno * 180) / math.pi
 
-  print("angulo_rotacion_grados_teorema_coseno:",angulo_rotacion_grados_teorema_coseno)
+  print("Resultado teorema del coseno:",angulo_rotacion_grados_teorema_coseno)
 
-  pan_transformada = (360 - angulo_rotacion) / 360
+  pan_transformada = angulo_rotacion_grados_teorema_coseno * 1 / 360
+  print("Pan segun la rotacion en grados:", pan_transformada)
   if(producto_cruz > 0):
-    pan_transformada = pan_transformada + coordenada_pan_referencia
+    pan_transformada = coordenada_pan_referencia + pan_transformada
   else:
-    pan_transformada = pan_transformada - coordenada_pan_referencia
+    pan_transformada = coordenada_pan_referencia - pan_transformada
 
+  print("Pan de movimiento para la camara:", pan_transformada)
   print(pan_transformada)
 
   return pan_transformada
@@ -59,14 +61,10 @@ if __name__ == '__main__':
   pao = (10.366164343123057, -66.97679802169682)
   coordenada_pan_referencia = 0.565
 
-  # angulo_rotacion = calcular_angulo_rotacion(origen, referencia, bocono)
-  # angulo_rotacion = calcular_angulo_rotacion(origen, referencia, meta)
-  # angulo_rotacion = calcular_angulo_rotacion(origen, referencia, simoncito)
-  angulo_rotacion = calcular_angulo_rotacion(origen, referencia, berta, coordenada_pan_referencia)
-  # angulo_rotacion = calcular_angulo_rotacion(origen, referencia, pao)
+  # pan = calcular_angulo_rotacion(origen, referencia, bocono, coordenada_pan_referencia)
+  # pan = calcular_angulo_rotacion(origen, referencia, meta, coordenada_pan_referencia)
+  # pan = calcular_angulo_rotacion(origen, referencia, simoncito, coordenada_pan_referencia)
+  # pan = calcular_angulo_rotacion(origen, referencia, berta, coordenada_pan_referencia)
+  pan = calcular_angulo_rotacion(origen, referencia, pao, coordenada_pan_referencia)
 
-  print("Angulo de rotación horizontal en sentido antihorario:", angulo_rotacion)
-
-  print("Pan de 0 fuera el punto inicial de la camara:", pan_transformada)
-
-  print("Pan de movimiento para la camara:", pan_transformada)
+  print("Resultado final: ", pan)
