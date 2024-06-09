@@ -1,6 +1,6 @@
 from onvif import ONVIFCamera
 
-class init_onvif:
+class Onvif:
     def __init__(self, ip, port, usuario, contrasena):
       print("Iniciando onvif")
       self.device = ONVIFCamera(
