@@ -18,7 +18,6 @@ class Onvif:
       print("Conectado a la camara")
 
     def move(self,x, y):
-
         print("Moviendo", x, y)
         absolute_move_request = self.service.create_type("AbsoluteMove")
         pose_dict = {"PanTilt": {"x": x, "y": y}, "Zoom": {"x": 0.0}}
