@@ -61,10 +61,10 @@ if __name__ == '__main__':
   pao = (10.366164343123057, -66.97679802169682)
   coordenada_pan_referencia = 0.565
 
-  # pan = calcular_angulo_rotacion(origen, referencia, bocono, coordenada_pan_referencia)
+  pan = calcular_angulo_rotacion(origen, referencia, bocono, coordenada_pan_referencia)
   # pan = calcular_angulo_rotacion(origen, referencia, meta, coordenada_pan_referencia)
   # pan = calcular_angulo_rotacion(origen, referencia, simoncito, coordenada_pan_referencia)
   # pan = calcular_angulo_rotacion(origen, referencia, berta, coordenada_pan_referencia)
-  pan = calcular_angulo_rotacion(origen, referencia, pao, coordenada_pan_referencia)
+  # pan = calcular_angulo_rotacion(origen, referencia, pao, coordenada_pan_referencia)
 
   print("Resultado final: ", pan)
