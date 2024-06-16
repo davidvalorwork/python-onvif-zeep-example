@@ -19,24 +19,22 @@ def main(json_parameters):
     # data["coordenada"] = (10.365654678419954, -66.97793301987491) # berta
     # data["coordenada"] = (10.366164343123057, -66.97679802169682) # pao
     # data["coordenada"] = (10.364618573568935, -66.97791360268778) # estacionamiento
-    print(json.dumps(data, indent=4))
+
+    # Extract necessary data from input
+    cam = data["camaras"][0]
+    cam_coord = cam["coordenada_camara"]
+    ref_coord = cam["coordenada_referencia"]
+    emerg_coord = data["coordenada"]
+    orig_ptz = cam["origen_ptz"][0]
+    altura = cam["altura"]
+    
+    # Initialize camera and calculate pan, tilt, and zoom
     camara = init_camera(data, type_camera)
-    pan = calcular_angulo_rotacion(
-        data["camaras"][0]["coordenada_camara"],
-        data["camaras"][0]["coordenada_referencia"],
-        data["coordenada"],
-        data["camaras"][0]["origen_ptz"][0]
-    )
-
-    tilt = calculate_camera_tilt(
-        data["camaras"][0]["coordenada_camara"], 
-        data["coordenada"],
-        data["camaras"][0]["altura"]
-    )
-
-    zoom = calculate_zoom(data["camaras"][0]["coordenada_camara"],data["coordenada"])
-
-    print(camara)
+    pan = calcular_angulo_rotacion(cam_coord, ref_coord, emerg_coord, orig_ptz)
+    tilt = calculate_camera_tilt(cam_coord, emerg_coord, altura)
+    zoom = calculate_zoom(cam_coord, emerg_coord)
+    
+    print(json.dumps(data, indent=4))
     camara.move(pan,tilt, zoom)
 
 if __name__ == '__main__':
