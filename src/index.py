@@ -37,9 +37,7 @@ def main(json_parameters):
     zoom = calculate_zoom(data["camaras"][0]["coordenada_camara"],data["coordenada"])
 
     print(camara)
-    # camara.move(0.565,0.5)
-    camara.move(pan, tilt, zoom)
-    # camara.move(0.565,0.5)
+    camara.move(pan,tilt, zoom)
 
 if __name__ == '__main__':
     sys.exit(main(json_parameters))

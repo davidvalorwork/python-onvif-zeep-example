@@ -1,51 +1,37 @@
 import math
 from geopy.distance import geodesic
+from typing import Tuple
 
-def calcular_angulo_rotacion(origen, referencia, emergencia, coordenada_pan_referencia):
+def calcular_angulo_rotacion(origen: Tuple[float, float], referencia: Tuple[float, float], emergencia: Tuple[float, float], ref_pan: float):
+  # Calculate distances using Haversine formula
+  a = geodesic(origen, referencia).meters  # Distance between origin and reference
+  b = geodesic(origen, emergencia).meters  # Distance between origin and emergency
+  c = geodesic(referencia, emergencia).meters  # Distance between reference and emergency
 
-  # Formula de Haversine
-  haversine_cateto_origen_referencia = geodesic(origen, referencia).meters
-  print("haversine_cateto_origen_referencia:",haversine_cateto_origen_referencia)
-  a = haversine_cateto_origen_referencia
+  # Calculate cosine theorem
+  cosine_theorem = math.acos(((a * a) + (b * b) - (c*c)) / (2 * a * b))
+  print(f"Cosine theorem result: {cosine_theorem}")
 
-  haversine_cateto_origen_emergencia = geodesic(origen, emergencia).meters
-  print("haversine_cateto_origen_emergencia3:",haversine_cateto_origen_emergencia)
-  b = haversine_cateto_origen_emergencia
+  # Calculate differences in latitude and longitude for origin-reference and origin-emergency
+  lat_diff_1, lon_diff_1 = origen[0] - referencia[0], origen[1] - referencia[1]
+  lat_diff_2, lon_diff_2 = origen[0] - emergencia[0], origen[1] - emergencia[1]
 
-  haversine_cateto_referencia_emergencia = geodesic(referencia, emergencia).meters
-  print("haversine_cateto_referencia_emergencia2:",haversine_cateto_referencia_emergencia)
-  c = haversine_cateto_referencia_emergencia
-
-  # angulo_rotacion_rad = math.atan2(delta_lon, delta_lat)
-  teorema_del_coseno = ((a * a) + (b * b) - (c*c))/(2 * a * b)
-  teorema_del_coseno = math.acos(teorema_del_coseno)
-  print("TEOREMA COSENO", teorema_del_coseno)
-
-  lat_org_1 = origen[0] - referencia[0]
-  lon_org_1 = origen[1] - referencia[1]
-
-  lat_org_2 = origen[0] - emergencia[0]
-  lon_org_2 = origen[1] - emergencia[1]
+  # Calculate cross product to determine rotation direction
+  cross_product = (lat_diff_1 * lon_diff_2) - (lon_diff_1 * lat_diff_2)
+  print(f"Rotation direction (positive for clockwise, negative for counterclockwise): {cross_product}")
   
-  producto_cruz= (lat_org_1 * lon_org_2) - (lon_org_1 * lat_org_2)
-  print("SI POSITIVO HORARIO SI NEGATIVO ANTIHORARIO",producto_cruz)
-
-  # Convertir el ángulo a grados
-  angulo_rotacion_grados_teorema_coseno = (teorema_del_coseno * 180) / math.pi
-
-  print("Resultado teorema del coseno:",angulo_rotacion_grados_teorema_coseno)
-
-  pan_transformada = angulo_rotacion_grados_teorema_coseno * 1 / 360
-  print("Pan segun la rotacion en grados:", pan_transformada)
-  if(producto_cruz > 0):
-    pan_transformada = coordenada_pan_referencia + pan_transformada
-  else:
-    pan_transformada = coordenada_pan_referencia - pan_transformada
-
-  print("Pan de movimiento para la camara:", pan_transformada)
-  print(pan_transformada)
-
-  return pan_transformada
+  # Convert angle to degrees and calculate transformed pan
+  cos_deg = (cosine_theorem * 180) / math.pi
+  pan_trans = cos_deg / 360
+  
+  # Adjust pan_transformada based on rotation direction
+  pan_trans = ref_pan + pan_trans if cross_product > 0 else ref_pan - pan_trans
+  
+  print(f"Result of cosine theorem: {cos_deg}")
+  print(f"Pan according to rotation in degrees: {pan_trans}")
+  print(f"Pan for camera movement: {pan_trans}")
+  
+  return pan_trans
 
 
 
