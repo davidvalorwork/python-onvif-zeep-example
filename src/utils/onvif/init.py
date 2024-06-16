@@ -1,20 +1,19 @@
 from onvif import ONVIFCamera
+import os
 
 class Onvif:
-    def __init__(self, ip, port, usuario, contrasena):
+    def __init__(self, ip: str, port: int, usuario: str, contrasena: str):
       print("Iniciando onvif")
-      self.device = ONVIFCamera(
-        ip,
-        port,
-        usuario,
-        contrasena,
-        ".\python-onvif-zeep\wsdl",
-        # transport=Transport(timeout=self.timeout),
-      )
-      self.service = self.device.create_ptz_service()
+      
+      wsdl_path = ".\\python-onvif-zeep\\wsdl" if os.name == 'nt' else "./python-onvif-zeep/wsdl"
+      
+      self.device = ONVIFCamera(ip, port, usuario, contrasena, wsdl_path)
+      
       self.ptz_service = self.device.create_ptz_service()
+      
       media_service = self.device.create_media_service()
       self.media_profile = media_service.GetProfiles()[0]
+      
       print("Conectado a la camara")
 
     def move(self, x, y, zoom=0.0):
