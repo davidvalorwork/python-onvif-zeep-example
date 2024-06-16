@@ -2,6 +2,8 @@ import sys
 import json
 from utils.init_camera import init_camera
 from utils.calculo_rotacion import calcular_angulo_rotacion
+from utils.calculate_camera_tilt import calculate_camera_tilt
+from utils.calculate_zoom import calculate_zoom
 
 usuario="davidvalorwork@gmail.com"
 password= "14141313aA@@"
@@ -26,9 +28,17 @@ def main(json_parameters):
         data["camaras"][0]["origen_ptz"][0]
     )
 
+    tilt = calculate_camera_tilt(
+        data["camaras"][0]["coordenada_camara"], 
+        data["coordenada"],
+        data["camaras"][0]["altura"]
+    )
+
+    zoom = calculate_zoom(data["camaras"][0]["coordenada_camara"],data["coordenada"])
+
     print(camara)
     # camara.move(0.565,0.5)
-    camara.move(pan,0.5)
+    camara.move(pan, tilt, zoom)
     # camara.move(0.565,0.5)
 
 if __name__ == '__main__':
