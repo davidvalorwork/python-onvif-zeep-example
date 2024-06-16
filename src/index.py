@@ -15,7 +15,7 @@ def main(json_parameters):
     # data["coordenada"] = (10.36500155145449, -66.97778161250672) # Bocono
     # data["coordenada"] = (10.365006828332977, -66.97706278051929) # meta
     # data["coordenada"] = (10.365654678419954, -66.97793301987491) # berta
-    data["coordenada"] = (10.366164343123057, -66.97679802169682) # pao
+    # data["coordenada"] = (10.366164343123057, -66.97679802169682) # pao
     # data["coordenada"] = (10.364618573568935, -66.97791360268778) # estacionamiento
     print(json.dumps(data, indent=4))
     camara = init_camera(data, type_camera)
