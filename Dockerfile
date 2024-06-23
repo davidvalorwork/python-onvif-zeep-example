@@ -8,4 +8,4 @@ RUN pip install -r requirements.txt
 RUN apt update -y && apt install vim -y
 RUN cd python-onvif-zeep && python setup.py install
 
-ENTRYPOINT ["bash"]
+CMD ["python", "src/index.py"]
