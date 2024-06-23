@@ -21,17 +21,8 @@ def calcular_angulo_rotacion(origen: Tuple[float, float], referencia: Tuple[floa
   print(f"Rotation direction (positive for clockwise, negative for counterclockwise): {cross_product}")
   
   # Convert angle to degrees and calculate transformed pan
-  cos_deg = (cosine_theorem * 180) / math.pi
-  pan_trans = cos_deg / 360
-  
-  # Adjust pan_transformada based on rotation direction
-  pan_trans = ref_pan + pan_trans if cross_product > 0 else ref_pan - pan_trans
-  
-  print(f"Result of cosine theorem: {cos_deg}")
-  print(f"Pan according to rotation in degrees: {pan_trans}")
-  print(f"Pan for camera movement: {pan_trans}")
-  
-  return pan_trans
+  degrees = (cosine_theorem * 180) / math.pi
+  return [degrees, cross_product]
 
 
 
