@@ -1,6 +1,7 @@
 ## Docker init:
 
 `docker run davidvalorwork/example-onvif -p 8080:8080`
+`docker push davidvalorwork/example-onvif`
 
 ### Instructions:
 
