@@ -4,6 +4,7 @@ from utils.init_camera import init_camera
 from utils.calculo_rotacion import calcular_angulo_rotacion
 from utils.calculate_camera_tilt import calculate_camera_tilt
 from utils.calculate_zoom import calculate_zoom
+from utils.scale import scale_angle_3
 
 usuario="davidvalorwork@gmail.com"
 password= "14141313aA@@"
@@ -18,7 +19,7 @@ def main(json_parameters):
     # data["coordenada"] = (10.365006828332977, -66.97706278051929) # meta
     # data["coordenada"] = (10.365654678419954, -66.97793301987491) # berta
     # data["coordenada"] = (10.366164343123057, -66.97679802169682) # pao
-    # data["coordenada"] = (10.364618573568935, -66.97791360268778) # estacionamiento
+    data["coordenada"] = (10.364618573568935, -66.97791360268778) # estacionamiento
 
     # Extract necessary data from input
     cam = data["camaras"][0]
@@ -27,14 +28,15 @@ def main(json_parameters):
     emerg_coord = data["coordenada"]
     orig_ptz = cam["origen_ptz"][0]
     altura = cam["altura"]
+    print(json.dumps(data, indent=4))
     
     # Initialize camera and calculate pan, tilt, and zoom
     camara = init_camera(data, type_camera)
     pan = calcular_angulo_rotacion(cam_coord, ref_coord, emerg_coord, orig_ptz)
     tilt = calculate_camera_tilt(cam_coord, emerg_coord, altura)
+    tilt = scale_angle_3(tilt)
     zoom = calculate_zoom(cam_coord, emerg_coord)
     
-    print(json.dumps(data, indent=4))
     camara.move(pan,tilt, zoom)
 
 if __name__ == '__main__':

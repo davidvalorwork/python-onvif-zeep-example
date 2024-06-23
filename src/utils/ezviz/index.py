@@ -9,7 +9,7 @@ class Ezviz:
       self.camera = EzvizCamera(self.client, serial)
       self.init_end_logs()
     
-    def move(self, x, y):
+    def move(self, x, y, z=0):
         try:
           move_coordinates(self.camera, x, y)
         except Exception as e:
