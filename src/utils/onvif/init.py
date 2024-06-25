@@ -19,7 +19,7 @@ class Onvif:
     def move(self, x, y, zoom=0.0):
       print(f"Moviendo to coordinates (x={x}, y={y}, zoom={zoom})")
       
-      absolute_move_request = self.service.create_type("AbsoluteMove")
+      absolute_move_request = self.ptz_service.create_type("AbsoluteMove")
       pose_dict = {"PanTilt": {"x": x, "y": y}, "Zoom": {"x": zoom}}
       
       absolute_move_request.Position = pose_dict

@@ -3,25 +3,24 @@ from geopy.distance import geodesic
 from typing import Tuple
 
 def calcular_angulo_rotacion(origen: Tuple[float, float], referencia: Tuple[float, float], emergencia: Tuple[float, float], ref_pan: float):
-  # Calculate distances using Haversine formula
-  a = geodesic(origen, referencia).meters  # Distance between origin and reference
-  b = geodesic(origen, emergencia).meters  # Distance between origin and emergency
-  c = geodesic(referencia, emergencia).meters  # Distance between reference and emergency
+  a = geodesic(origen, referencia).meters
+  b = geodesic(origen, emergencia).meters
+  c = geodesic(referencia, emergencia).meters
 
-  # Calculate cosine theorem
   cosine_theorem = math.acos(((a * a) + (b * b) - (c*c)) / (2 * a * b))
+  print(f"Distance a (origen to referencia): {a} meters, Coordinates: origen to referencia")
+  print(f"Distance b (origen to emergencia): {b} meters, Coordinates: origen to emergencia")
+  print(f"Distance c (referencia to emergencia): {c} meters, Coordinates: referencia to emergencia")
   print(f"Cosine theorem result: {cosine_theorem}")
 
-  # Calculate differences in latitude and longitude for origin-reference and origin-emergency
   lat_diff_1, lon_diff_1 = origen[0] - referencia[0], origen[1] - referencia[1]
   lat_diff_2, lon_diff_2 = origen[0] - emergencia[0], origen[1] - emergencia[1]
 
-  # Calculate cross product to determine rotation direction
   cross_product = (lat_diff_1 * lon_diff_2) - (lon_diff_1 * lat_diff_2)
-  print(f"Rotation direction (positive for clockwise, negative for counterclockwise): {cross_product}")
-  
-  # Convert angle to degrees and calculate transformed pan
+  print(f"Cross product: {cross_product}")
+
   degrees = (cosine_theorem * 180) / math.pi
+  print(f"Degrees: {degrees}")
   return [degrees, cross_product]
 
 
@@ -39,9 +38,5 @@ if __name__ == '__main__':
   coordenada_pan_referencia = 0.565
 
   pan = calcular_angulo_rotacion(origen, referencia, bocono, coordenada_pan_referencia)
-  # pan = calcular_angulo_rotacion(origen, referencia, meta, coordenada_pan_referencia)
-  # pan = calcular_angulo_rotacion(origen, referencia, simoncito, coordenada_pan_referencia)
-  # pan = calcular_angulo_rotacion(origen, referencia, berta, coordenada_pan_referencia)
-  # pan = calcular_angulo_rotacion(origen, referencia, pao, coordenada_pan_referencia)
 
   print("Resultado final: ", pan)

@@ -1,11 +1,8 @@
 from geopy.distance import geodesic
 
-def calculate_zoom(coord1: tuple, coord2: tuple) -> float:
+def calculate_zoom(coord1: tuple, coord2: tuple, min_distance: float, max_distance: float) -> float:
   # Calculate the distance between the two coordinates in meters
   distance = geodesic(coord1, coord2).meters
-
-  # Define the zoom scale limits
-  min_distance, max_distance = 30, 300
 
   # Calculate the zoom level
   if distance <= min_distance:
