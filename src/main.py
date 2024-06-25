@@ -9,10 +9,9 @@ from utils.scale import scale_angle_0to1, scale_angle_90degresstilt, scale_angle
 usuario="davidvalorwork@gmail.com"
 password= "14141313aA@@"
 serial = "BB2643869"
-type_camera="ezviz"
 
-json_parameters = '{ "emergencia_id": "1", "coordenada": [ 10.364744, -66.977883 ], "camaras": [ { "id": 1, "scale_pan": "01", "scale_tilt": "01", "scale_zoom": "03", "coordenada_camara": [ 10.365072129702737, -66.9775462486802 ], "coordenada_referencia": [ 10.364764751417162, -66.97756636524517 ], "altura": 45, "origen_ptz": [ 0.565, 1, 0 ], "vpn": "wg0", "ip": "10.0.0.4", "puerto": 80, "usuario": "davidvalorwork@gmail.com", "contrasena": "14141313aA@@", "serial": "BB2643869" } ] }'
-
+json_parameters = '{ "emergencia_id": "1", "coordenada": [ 10.364744, -66.977883 ], "camaras": [ { "id": 1, "scale_pan": "01", "scale_tilt": "01", "scale_zoom": "03", "coordenada_camara": [ 10.365072129702737, -66.9775462486802 ], "coordenada_referencia": [ 10.364764751417162, -66.97756636524517 ], "altura": 45, "origen_ptz": [ 0.565, 1, 0 ], "vpn": "wg0", "ip": "10.0.0.4", "puerto": 80, "usuario": "davidvalorwork@gmail.com", "contrasena": "14141313aA@@", "serial": "BB2643869", "tipo_camara": "ezviz" } ] }'
+json_parameters = '{ "emergencia_id": "1", "coordenada": [ -33.564374585967286, -70.55213001080034 ], "camaras": [ { "id": 1, "coordenada_camara": [ -33.56467351554227, -70.55168811687197 ], "coordenada_referencia": [ -33.56488416249139, -70.55192750401524 ], "altura": 3, "scale_pan": "-11", "scale_tilt": "01", "scale_zoom": "03", "origen_ptz": [ 0.143, 0.5, 0 ], "vpn": "wg0", "ip": "192.168.0.64", "puerto": 80, "usuario": "admin", "contrasena": "12341234aA", "tipo_camara": "hikvision" } ] }'
 def main(json_parameters):
     data = json.loads(json_parameters)
     print(json.dumps(data, indent=4))
@@ -34,6 +33,7 @@ def main(json_parameters):
     scale_zoom = cam["scale_zoom"]
     zoom_min = cam["zoom_min"]
     zoom_max = cam["zoom_max"]
+    type_camera = cam["tipo_camara"]
     
     camara = init_camera(data, type_camera)
     pan, cross = calcular_angulo_rotacion(cam_coord, ref_coord, emerg_coord, ref_pan)
