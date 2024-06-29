@@ -33,9 +33,8 @@ def main(json_parameters):
     scale_zoom = cam["scale_zoom"]
     zoom_min = cam["zoom_min"]
     zoom_max = cam["zoom_max"]
-    type_camera = cam["tipo_camara"]
     
-    camara = init_camera(data, type_camera)
+    camara = init_camera(data)
     pan, cross = calcular_angulo_rotacion(cam_coord, ref_coord, emerg_coord, ref_pan)
     print(f"Pan according to rotation in degrees: {pan}")
     if(scale_pan == '01'): pan = scale_angle_0to1(pan, ref_pan, cross)

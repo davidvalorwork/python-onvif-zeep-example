@@ -11,6 +11,7 @@ class Ezviz:
     
     def move(self, x, y, z=0):
         try:
+          print("Moving camera...", x, y, z)
           move_coordinates(self.camera, x, y)
         except Exception as e:
             print("ERROR MOVING CAMERA")

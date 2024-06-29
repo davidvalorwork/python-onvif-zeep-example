@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>HUAYRA</title>
+  <link rel="icon" href="https://www.pikpng.com/pngl/m/182-1825323_cctv-clipart-ptz-camera-pan-tilt-zoom-icon.png"
+    type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+    integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+    crossorigin="anonymous"></script>
+</head>
+
+<style>
+  html {
+    height: 100%;
+  }
+
+  body {
+    margin: 0;
+    height: 100%;
+    overflow: auto;
+    position: relative;
+    /* Needed for absolute positioning of the pseudo-element */
+  }
+
+  body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhIhSkbIYc4tCCJqUgpZelNiTaenRFIgOOGbxHgKf4Afxiziy2CamCVJheKLR6BHwMIoO6J0ELt7DB4kpyus6bFSJJxqxAK9wNr66D0jPOp54MDO-BjAoFiUAYYjzpkeEOgAckxYsjwsrhAEf7kekQM-9yGBn9uQYcxLxPgGgUG6IMurLBhVpYQTwejcQ/w1600/Abstract-mesh-background-3840x2160.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    /* Corrected typo */
+    opacity: 0.1;
+    /* Adjust opacity as needed */
+    z-index: -1;
+    /* Ensure the background is behind the content */
+  }
+</style>
+
+<body>
+  <div class="container">
+    <div class="text-center mt-4">
+      <h1>HUAYRA</h1>
+      <img
+        src="https://th.bing.com/th/id/R.f31d90534c0810bc5a6d9d71423c87e1?rik=wxr62%2fLjAzGgbw&riu=http%3a%2f%2fcdn.shopify.com%2fs%2ffiles%2f1%2f0109%2f3477%2f9968%2fproducts%2fPTZ_Front_1024x1024.png%3fv%3d1555464920&ehk=cYJkoRua7cBkKZuEpKL3Y%2fp9HPtngOR8kNlOx3Y8S1c%3d&risl=&pid=ImgRaw&r=0"
+        alt="HUAYRA" class="rounded mx-auto d-block" width="250px" />
+    </div>
+    <form>
+      <div class="row text-center">
+        <div class="col">
+          <label class="form-label">Coordenadas de la Emergencia (Latitud y Longitud)</label>
+          <input class="form-control" type="text" id="emergencia"
+            placeholder="10.366940887386631, -66.99016022101904..." />
+          <button id="seeEmergenciaInMap" class="btn btn-primary">
+            <i class="bi bi-crosshair"></i>
+          </button>
+        </div>
+        <div class="col">
+          <label for="coordenada_camara" class="form-label">Coordenadas de la camara (Latitud y Longitud)</label>
+          <input class="form-control" type="text" id="coordenada_camara"
+            placeholder="10.366940887386631, -66.99016022101904..." />
+          <button id="seeCamaraMaps" class="btn btn-primary">
+            <i class="bi bi-crosshair"></i>
+          </button>
+        </div>
+        <div class="col">
+          <label for="coordenada_referencia" class="form-label">Coordenadas de la referencia (Latitud y
+            Longitud)</label>
+          <input class="form-control" type="text" id="coordenada_referencia"
+            placeholder="10.366940887386631, -66.99016022101904..." />
+          <button id="seeReferenciaMaps" class="btn btn-primary">
+            <i class="bi bi-crosshair"></i>
+          </button>
+        </div>
+      </div>
+      <div class="row">
+
+
+        <div class="col">
+          <label for="altura" class="form-label">Altura aproximada de la camara</label>
+          <input class="form-control" type="text" id="altura" placeholder="4..." />
+        </div>
+        <div class="col">
+          <label for="origen_ptz" class="form-label">Pan, Tilt, Zoom (PTZ) de la referencia</label>
+          <input class="form-control" type="text" id="origen_ptz" placeholder="0.5,0.2,0..." />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <label for="ip" class="form-label">IP Address</label>
+          <input class="form-control" type="text" id="ip" placeholder="192.168.1.1..." />
+        </div>
+        <div class="col">
+          <label for="puerto" class="form-label">Puerto</label>
+          <input class="form-control" type="text" id="puerto" placeholder="8080..." />
+        </div>
+        <div class="col">
+          <label for="usuario" class="form-label">Usuario</label>
+          <input class="form-control" type="text" id="usuario" placeholder="Pepe..." />
+        </div>
+        <div class="col">
+          <label for="contrasena" class="form-label">Contraseña</label>
+          <input class="form-control" type="password" id="contrasena" placeholder="password..." />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <label for="scale_pan" class="form-label">Escala de movimiento horizontal</label>
+          <select class="form-select" id="scale_pan">
+            <option value="01">De 0 a 1</option>
+            <option value="-11">De -1 a 1</option>
+          </select>
+        </div>
+        <div class="col">
+          <label for="scale_tilt" class="form-label">Escala de movimiento vertical</label>
+          <select class="form-select" id="scale_tilt">
+            <option value="01">De 0 a 1</option>
+            <option value="-11">De -1 a 1</option>
+          </select>
+        </div>
+        <div class="col">
+          <label for="scale_zoom" class="form-label">Escala de zoom</label>
+          <select class="form-select" id="scale_zoom">
+            <option value="01">De 0 a 1</option>
+            <option value="-11">De -1 a 1</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="form-group">
+            <label for="zoom_min">Mínima distancia para empezar a aplicar el zoom:</label>
+            <input type="number" id="zoom_min" class="form-control" placeholder="Distancia en metros...">
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <label for="zoom_max">Máxima distancia para empezar a aplicar el zoom:</label>
+            <input type="number" id="zoom_max" class="form-control" placeholder="Distancia en metros...">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <label for="serial" class="form-label">Serial</label>
+          <input class="form-control" type="text" id="serial" placeholder="BB2643869..." />
+        </div>
+        <div class="col">
+          <label for="tipo_camara" class="form-label">Tipo de Camara</label>
+          <select class="form-select" id="tipo_camara">
+            <option value="hikvision">Hikvision</option>
+            <option value="ezviz">Ezviz</option>
+          </select>
+        </div>
+      </div>
+      <div class="text-center mt-3">
+        <button type="submit" class="btn btn-primary">Enviar</button>
+      </div>
+    </form>
+
+    <hr>
+    <div class="footer">
+      <div class="form-group text-center">
+        <label for="prueba">Pan Tilt y Zoom de prueba:</label>
+        <input type="text" id="prueba" class="form-control" placeholder="0.1,0.4,1">
+        <button id="move" class="btn btn-primary">
+          <i class="bi bi-camera"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</body>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('seeEmergenciaInMap').addEventListener('click', function (event) {
+      event.preventDefault();
+    });
+    document.getElementById('seeCamaraMaps').addEventListener('click', function (event) {
+      event.preventDefault();
+    });
+    document.getElementById('seeReferenciaMaps').addEventListener('click', function (event) {
+      event.preventDefault();
+    });
+    document.getElementById('move').addEventListener('click', function (event) {
+      event.preventDefault();
+    });
+  });
+
+  function openMapForLocation(elementId) {
+    const location = document.getElementById(elementId).value;
+    window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`);
+  }
+
+  function move() {
+    let formFields = {};
+    document.querySelectorAll('input, select').forEach(element => {
+      localStorage.setItem(element.id, element.value);
+      formFields[element.id] = element.value;
+    });
+    let formData = prepareFormData(formFields);
+    let send = {}
+    send.pan = formFields.prueba.split(',')[0]
+    send.tilt = formFields.prueba.split(',')[1]
+    send.zoom = formFields.prueba.split(',')[2]
+    send.camaras = formData.camaras
+    fetch('/move', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(send)
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Success:', data);
+        alert("Movimiento ejecutado con éxito");
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        alert(error);
+      });
+  }
+
+  document.getElementById('seeEmergenciaInMap').addEventListener('click', () => openMapForLocation('emergencia'));
+  document.getElementById('seeCamaraMaps').addEventListener('click', () => openMapForLocation('coordenada_camara'));
+  document.getElementById('seeReferenciaMaps').addEventListener('click', () => openMapForLocation('coordenada_referencia'));
+  document.getElementById('move').addEventListener('click', () => move());
+
+
+  function prepareCameraData(formFields) {
+    let camara = {};
+    camara.coordenada_camara = formFields.coordenada_camara.split(', ');
+    camara.coordenada_referencia = formFields.coordenada_referencia.split(', ');
+    camara.origen_ptz = formFields.origen_ptz.split(',');
+    camara.ip = formFields.ip;
+    camara.usuario = formFields.usuario;
+    camara.contrasena = formFields.contrasena;
+    camara.scale_pan = formFields.scale_pan;
+    camara.scale_tilt = formFields.scale_tilt;
+    camara.scale_zoom = formFields.scale_zoom;
+    camara.altura = formFields.altura;
+    camara.serial = formFields.serial;
+    console.log(formFields.tipo_camara)
+    camara.tipo_camara = formFields.tipo_camara;
+    camara.zoom_min = formFields.zoom_min;
+    camara.zoom_max = formFields.zoom_max;
+    return camara;
+  }
+
+  function prepareFormData(formFields) {
+    let camara = prepareCameraData(formFields);
+    let formData = {
+      emergencia_id: 1,
+      coordenada: formFields.emergencia.split(', '),
+      camaras: [camara]
+    };
+    return formData;
+  }
+
+  function sendDataToServer(formData) {
+    console.log(formData)
+    fetch('/receive_json', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Success:', data);
+        alert("Movimiento ejecutado con éxito")
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        alert(error)
+      });
+  }
+
+  function saveFormFields() {
+    let formFields = {};
+    document.querySelectorAll('input, select').forEach(element => {
+      localStorage.setItem(element.id, element.value);
+      formFields[element.id] = element.value;
+    });
+    let formData = prepareFormData(formFields);
+    sendDataToServer(formData);
+  }
+
+  function loadFormFields() {
+    const formFields = {};
+    document.querySelectorAll('input, select').forEach(element => {
+      if (localStorage.getItem(element.id)) {
+        element.value = localStorage.getItem(element.id);
+      }
+    });
+  }
+
+  document.querySelector('form').addEventListener('submit', saveFormFields);
+  document.addEventListener('DOMContentLoaded', loadFormFields);
+</script>
+
+
+</html>
