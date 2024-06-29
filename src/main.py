@@ -15,17 +15,12 @@ json_parameters = '{ "emergencia_id": "1", "coordenada": [ -33.564374585967286, 
 def main(json_parameters):
     data = json.loads(json_parameters)
     print(json.dumps(data, indent=4))
-    # data["coordenada"] = (10.36500155145449, -66.97778161250672) # Bocono
-    # data["coordenada"] = (10.365006828332977, -66.97706278051929) # meta
-    # data["coordenada"] = (10.365654678419954, -66.97793301987491) # berta
-    # data["coordenada"] = (10.366164343123057, -66.97679802169682) # pao
-    # data["coordenada"] = (10.364618573568935, -66.97791360268778) # estacionamiento
 
     # Extract necessary data from input
     cam = data["camaras"][0]
-    cam_coord = cam["coordenada_camara"]
-    ref_coord = cam["coordenada_referencia"]
-    emerg_coord = data["coordenada"]
+    cam_coord = tuple(map(float, cam["coordenada_camara"]))
+    ref_coord = tuple(map(float, cam["coordenada_referencia"]))
+    emerg_coord = tuple(map(float, data["coordenada"]))
     ref_pan = cam["origen_ptz"][0]
     altura = cam["altura"]
     scale_pan = cam["scale_pan"]

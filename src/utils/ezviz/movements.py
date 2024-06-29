@@ -9,4 +9,4 @@ def move_coordinates(camera, x, y):
 def multiple_movements(camera, direction, step, number):
     for x in range(number):
         camera.move(direction,step)
-        sleep(3)
+        sleep(2)
