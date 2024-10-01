@@ -2,6 +2,10 @@ from bottle import Bottle, request, response, view
 from main import main
 import json
 from utils.init_camera import init_camera
+from utils.camera_kafka import Consumer
+
+consumer = Consumer("onvif_example")
+consumer.star_read()
 
 app = Bottle()
 route = app.route
