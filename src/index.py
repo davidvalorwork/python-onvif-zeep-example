@@ -57,5 +57,3 @@ def index():
 if __name__ == '__main__':
   app.run(host='0.0.0.0', port=8080, debug=True)
 
-
-# curl -X POST http://localhost:8080/receive_json -H "Content-Type: application/json" -d '{"emergencia_id": "1", "coordenada": [ -33.564374585967286, -70.55213001080034 ], "scale_pan": "-11", "scale_tilt": "01", "scale_zoom": "03", "camaras": [ { "id": 1, "coordenada_camara": [ -33.56467351554227, -70.55168811687197 ], "coordenada_referencia": [ -33.56488416249139, -70.55192750401524 ], "altura": 3, "origen_ptz": [ 0.143, 0.5, 0 ], "vpn": "wg0", "ip": "192.168.0.64", "puerto": 80, "usuario": "admin", "contrasena": "12341234aA" } ]}'"
