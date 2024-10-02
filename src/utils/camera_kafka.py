@@ -1,5 +1,6 @@
 # consumer.py
 from kafka import KafkaConsumer
+from main import main
 import json
 
 
@@ -7,7 +8,8 @@ class Consumer:
     def __init__(self, topic, server='localhost:9092'):
         self._consumer = KafkaConsumer(topic,
                                        bootstrap_servers=''+server,
-                                       value_deserializer=lambda x: json.loads(x.decode('utf-8')),
+                                       value_deserializer=lambda x: json.loads(
+                                           x.decode('utf-8')),
                                        group_id='onvif-example-group')
 
         self.data = []
@@ -31,6 +33,10 @@ class Consumer:
             print(f'Message {message_count}: {message}')
             self.data.append(message)
             message_count += 1
+            try:
+                main(json.dumps(message))
+            except Exception as e:
+                print(e)
 
 
 if __name__ == '__main__':
